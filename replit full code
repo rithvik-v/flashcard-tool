@@ -1,0 +1,179 @@
+// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
+
+// src/App.js
+import React, { useState } from 'react';
+import Flashcard from './Flashcard';
+import Dashboard from './Dashboard';
+
+function App() {
+    const [flashcards, setFlashcards] = useState([
+        { id: 1, question: 'What is React?', answer: 'A JavaScript library for building user interfaces' },
+        { id: 2, question: 'What is a component?', answer: 'A reusable piece of UI' },
+        { id: 3, question: 'What is state?', answer: 'An object that represents the parts of an app that can change' },
+    ]);
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handleNext = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    };
+
+    const handlePrevious = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
+    };
+
+    return (
+        <div className="App">
+            <h1>Flashcard Learning Tool</h1>
+            <Flashcard
+                flashcard={flashcards[currentIndex]}
+                onNext={handleNext}
+                onPrevious={handlePrevious}
+            />
+            <Dashboard flashcards={flashcards} setFlashcards={setFlashcards} />
+        </div>
+    );
+}
+
+export default App;
+
+// src/Flashcard.js
+import React, { useState } from 'react';
+
+function Flashcard({ flashcard, onNext, onPrevious }) {
+    const [flipped, setFlipped] = useState(false);
+
+    const handleFlip = () => {
+        setFlipped(!flipped);
+    };
+        </div>
+    );
+}
+
+export default Flashcard;
+
+// src/Dashboard.js
+import React from 'react';
+
+function Dashboard({ flashcards, setFlashcards }) {
+    const handleAddFlashcard = () => {
+        const question = prompt("Enter the question:");
+        const answer = prompt("Enter the answer:");
+        if (question && answer) {
+            setFlashcards([...flashcards, { id: flashcards.length + 1, question, answer }]);
+        }
+    };
+                {flashcards.map((flashcard) => (
+                    <li key={flashcard.id}>{flashcard.question}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+export default Dashboard;
+
+// src/index.css
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+.App {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.flashcard {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.navigation {
+    margin-top: 20px;
+}
+button {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+                // src/Flashcard.js
+                import React, { useState } from 'react';
+
+                function Flashcard({ flashcard, onNext, onPrevious }) {
+                    const [flipped, setFlipped] = useState(false);
+
+                    const handleFlip = () => {
+                        setFlipped(!flipped);
+                    };
+                body {
+                    font-family: 'Arial', sans-serif;
+                    margin: 0;
+                    padding: 20px;
+                    background-color: #f4f4f4;
+                }
+
+                .App {
+                    max-width: 600px;
+                    margin: auto;
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                .flashcard {
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    background-color: #fff;
+                    padding: 20px;
+                    text-align: center;
+                    transition: transform 0.6s;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+
+                .flashcard.flipped {
+                    transform: rotateY(180deg);
+                }
+
+                .navigation {
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                }
+
+                button {
+                    padding: 10px 15px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #007bff;
+                    color: white;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+
+                button:hover {
+                    background-color: #0056b3;
+                }
